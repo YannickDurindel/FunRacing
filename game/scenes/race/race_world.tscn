@@ -1,0 +1,30 @@
+[gd_scene load_steps=8 format=3 uid="uid://race_world"]
+
+[ext_resource type="Script" path="res://scenes/race/race_world.gd" id="1_rw"]
+[ext_resource type="Script" path="res://scripts/race/race_director.gd" id="2_rd"]
+[ext_resource type="Script" path="res://scripts/race/race_session.gd" id="3_rs"]
+[ext_resource type="Script" path="res://scripts/track/position_tracker.gd" id="4_pt"]
+[ext_resource type="Script" path="res://scripts/utils/debug_overlay.gd" id="5_do"]
+[ext_resource type="Script" path="res://scenes/race/race_hud.gd" id="6_hud"]
+
+[node name="RaceWorld" type="Node3D"]
+script = ExtResource("1_rw")
+
+[node name="RaceDirector" type="Node" parent="."]
+script = ExtResource("2_rd")
+
+[node name="RaceSession" type="Node" parent="."]
+script = ExtResource("3_rs")
+
+[node name="PositionTracker" type="Node" parent="."]
+script = ExtResource("4_pt")
+
+[node name="DebugOverlay" type="CanvasLayer" parent="."]
+script = ExtResource("5_do")
+
+[node name="RaceHUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("6_hud")

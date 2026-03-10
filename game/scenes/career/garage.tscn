@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://garage"]
+
+[ext_resource type="Script" path="res://scenes/career/garage.gd" id="1_gr"]
+
+[node name="Garage" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_gr")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.04, 0.04, 0.06, 1)
+
+[node name="Header" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 960.0
+offset_bottom = 60.0
+
+[node name="Title" type="Label" parent="Header"]
+text = "Garage — Upgrades"
+theme_override_font_sizes/font_size = 28
+size_flags_horizontal = 3
+
+[node name="Budget" type="Label" parent="Header"]
+text = "Budget: $0"
+theme_override_font_sizes/font_size = 22
+modulate = Color(0.5, 1, 0.5, 1)
+
+[node name="UpgradeGrid" type="GridContainer" parent="."]
+layout_mode = 1
+offset_left = 40.0
+offset_top = 80.0
+offset_right = 900.0
+offset_bottom = 700.0
+columns = 4
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 16
+
+[node name="BtnBack" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -60.0
+offset_right = 140.0
+offset_bottom = -20.0
+text = "Back"

@@ -1,0 +1,30 @@
+[gd_resource type="Environment" format=3 uid="uid://race_env"]
+
+[resource]
+background_mode = 2
+background_energy_multiplier = 1.0
+sky = ExtResource("uid://sky_day")
+ambient_light_source = 3
+ambient_light_color = Color(0.9, 0.9, 1.0, 1)
+ambient_light_sky_contribution = 0.5
+ambient_light_energy = 0.3
+fog_enabled = false
+volumetric_fog_enabled = false
+glow_enabled = true
+glow_intensity = 0.4
+glow_bloom = 0.1
+glow_blend_mode = 2
+glow_hdr_threshold = 1.0
+ssao_enabled = true
+ssao_radius = 1.0
+ssao_intensity = 2.0
+ssr_enabled = true
+ssr_max_steps = 64
+ssr_fade_in = 0.15
+ssr_fade_out = 2.0
+ssr_depth_tolerance = 0.2
+tonemap_mode = 2
+tonemap_exposure = 1.0
+tonemap_white = 6.0
+adjustment_enabled = true
+adjustment_saturation = 1.1

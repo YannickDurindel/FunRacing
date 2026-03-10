@@ -1,0 +1,23 @@
+# Godot 4 project files
+game/.godot/
+game/saves/
+
+# Blender temp files
+*.blend1
+*.blend2
+
+# Godot export presets (contains paths)
+export_presets.cfg
+
+# macOS
+.DS_Store
+
+# Generated GLB assets (large binaries, rebuilt by generate_assets.sh)
+game/cars/player_car/meshes/*.glb
+game/tracks/*/meshes/*.glb
+
+# TLS certs (private key)
+game/web_controller/key.pem
+
+# OS
+Thumbs.db

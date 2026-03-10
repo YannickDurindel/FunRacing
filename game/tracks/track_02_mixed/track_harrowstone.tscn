@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://track_harrowstone"]
+
+[ext_resource type="PackedScene" uid="uid://track_harrowstone_surface" path="res://tracks/track_02_mixed/meshes/track_surface.glb" id="1_surface"]
+
+[node name="TrackHarrowstone" type="Node3D"]
+
+[node name="TrackSurface" parent="." instance=ExtResource("1_surface")]
+
+[sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
+sky_top_color = Color(0.1, 0.32, 0.72, 1)
+sky_horizon_color = Color(0.7, 0.85, 0.92, 1)
+ground_bottom_color = Color(0.1, 0.12, 0.1, 1)
+
+[sub_resource type="Sky" id="sky_res"]
+sky_material = SubResource("sky_mat")
+
+[sub_resource type="Environment" id="env_res"]
+background_mode = 2
+sky = SubResource("sky_res")
+ambient_light_source = 3
+glow_enabled = true
+ssao_enabled = true
+tonemap_mode = 2
+
+[node name="WorldEnv" type="WorldEnvironment" parent="."]
+environment = SubResource("env_res")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.354, 0.354, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 0, 0, 0)
+light_energy = 1.5
+shadow_enabled = true
+
+[node name="TrackDataNode" type="Node3D" parent="."]

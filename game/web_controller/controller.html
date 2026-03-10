@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>FunRacing Controller</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; touch-action: none; }
+  body {
+    background: #0a0a12;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    user-select: none;
+  }
+  #status-bar {
+    background: #111;
+    padding: 6px 16px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+  }
+  #status-dot { width: 10px; height: 10px; border-radius: 50%; background: #f44; display: inline-block; margin-right: 6px; }
+  #status-dot.connected { background: #4f4; }
+  #steering-bar {
+    height: 12px;
+    background: #222;
+    margin: 6px 16px;
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+  }
+  #steering-fill {
+    position: absolute;
+    top: 0; height: 100%;
+    width: 6px;
+    background: #4af;
+    border-radius: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: left 0.05s;
+  }
+  #main-controls {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    padding: 8px 12px;
+  }
+  .pedal {
+    flex: 1;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    transition: filter 0.05s;
+  }
+  #throttle-btn {
+    background: linear-gradient(160deg, #1a5c1a, #0d3d0d);
+    border: 2px solid #2d8c2d;
+    color: #4f4;
+  }
+  #throttle-btn.active { filter: brightness(1.4); }
+  #brake-btn {
+    background: linear-gradient(160deg, #5c1a1a, #3d0d0d);
+    border: 2px solid #8c2d2d;
+    color: #f44;
+  }
+  #brake-btn.active { filter: brightness(1.4); }
+  #aux-controls {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    padding: 8px 12px 16px;
+  }
+  .aux-btn {
+    flex: 1;
+    height: 56px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    border: 2px solid;
+  }
+  #drs-btn { background: #112211; border-color: #2a6; color: #4d4; }
+  #drs-btn.active { background: #1a3a1a; filter: brightness(1.5); }
+  #ers-btn { background: #111133; border-color: #44a; color: #88f; }
+  #ers-btn.active { background: #1a1a4a; filter: brightness(1.5); }
+  #tilt-indicator {
+    font-size: 11px;
+    color: #888;
+    text-align: center;
+    padding: 2px;
+  }
+  #connect-panel {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    z-index: 100;
+  }
+  #connect-panel.hidden { display: none; }
+  #server-input {
+    background: #222;
+    border: 1px solid #555;
+    color: #fff;
+    padding: 10px 16px;
+    font-size: 16px;
+    border-radius: 8px;
+    width: 280px;
+    text-align: center;
+  }
+  #connect-btn {
+    background: #1a4a1a;
+    border: 2px solid #2d8c2d;
+    color: #4f4;
+    padding: 12px 32px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  #gyro-prompt {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    z-index: 200;
+  }
+  #gyro-prompt.hidden { display: none; }
+  #gyro-prompt button {
+    background: #1a3a5c;
+    border: 2px solid #2a6aac;
+    color: #8af;
+    padding: 14px 36px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div id="gyro-prompt">
+  <p style="font-size:20px; text-align:center; padding:0 20px;">Tap to enable<br>motion controls</p>
+  <button id="gyro-allow-btn">Enable Gyroscope</button>
+</div>
+
+<div id="connect-panel">
+  <p style="font-size:20px;">FunRacing Controller</p>
+  <p style="font-size:13px; color:#aaa;">Enter the PC's IP address</p>
+  <input type="text" id="server-input" placeholder="192.168.x.x" inputmode="url">
+  <button id="connect-btn" onclick="connectToServer()">Connect</button>
+  <p id="connect-error" style="color:#f44; font-size:13px;"></p>
+</div>
+
+<div id="status-bar">
+  <span><span id="status-dot"></span><span id="status-text">Disconnected</span></span>
+  <span id="speed-display" style="font-size:16px; font-weight:bold;">0 km/h</span>
+  <span id="pos-display">P—</span>
+</div>
+
+<div id="steering-bar"><div id="steering-fill"></div></div>
+<div id="tilt-indicator">Tilt phone to steer</div>
+
+<div id="main-controls">
+  <div id="throttle-btn" class="pedal">THROTTLE</div>
+  <div id="brake-btn" class="pedal">BRAKE</div>
+</div>
+
+<div id="aux-controls">
+  <div id="drs-btn" class="aux-btn">DRS</div>
+  <div id="ers-btn" class="aux-btn">⚡ ERS</div>
+</div>
+
+<script src="controller.js"></script>
+</body>
+</html>

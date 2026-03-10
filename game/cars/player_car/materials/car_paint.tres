@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://car_paint"]
+
+[resource]
+albedo_color = Color(0.05, 0.25, 0.8, 1)
+metallic = 0.9
+metallic_specular = 0.5
+roughness = 0.1
+clearcoat_enabled = true
+clearcoat = 1.0
+clearcoat_roughness = 0.05

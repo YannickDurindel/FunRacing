@@ -1,0 +1,27 @@
+[gd_scene load_steps=1 format=3 uid="uid://tire_smoke"]
+
+[node name="TireSmoke" type="GPUParticles3D"]
+emitting = false
+amount = 64
+lifetime = 0.8
+local_coords = false
+draw_passes = 1
+
+[sub_resource type="ParticleProcessMaterial" id="smoke_mat"]
+emission_shape = 0
+direction = Vector3(0, 1, 0)
+spread = 30.0
+gravity = Vector3(0, 0.5, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 2.0
+angular_velocity_min = -60.0
+angular_velocity_max = 60.0
+scale_min = 0.15
+scale_max = 0.45
+color = Color(0.8, 0.8, 0.8, 0.6)
+color_ramp = null
+damping_min = 2.0
+damping_max = 5.0
+
+[node name="TireSmoke" type="GPUParticles3D"]
+process_material = SubResource("smoke_mat")
